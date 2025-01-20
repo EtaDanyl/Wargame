@@ -1,3 +1,5 @@
+import random
+
 class Card:
     def __init__(self, name, rank):
         self._name = name
@@ -61,8 +63,14 @@ class Player:
     def __str__(self):
         hand_representation = ', '.join(str(card) for card in self._hand) if self._hand else "No cards"
         return f"Player: {self._name}, Hand: [{hand_representation}]"
-    
-    
+
+
+POSSIBLE_CARDS = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"]
+MAX_NUM_OF_CARDS_IN_DECK = 52
+#There 4 suites but in this case suits are irrelevent so we just make 4 duplicates of each rank
+MAX_NM_OF_CARDS_OF_EACH_RANK = 4
+NUMBER_OF_DIFFERENT_CARD_TYPES = len(POSSIBLE_CARDS)
+
 def main():
     deck = initialize_deck()
     player = create_player("Player")
@@ -87,6 +95,30 @@ def play_game(player, computer):
         if isinstance(winner, Player):
             game_end(winner)
             break
+
+def initialize_deck():
+    new_deck = []
+
+    for i in range(NUMBER_OF_DIFFERENT_CARD_TYPES):
+        for _ in range(MAX_NM_OF_CARDS_OF_EACH_RANK):
+            new_card = Card(POSSIBLE_CARDS[i], i)
+            new_deck.append(new_card)
+
+    random.shuffle(new_deck)
+
+    return new_deck
+
+def distribute_cards(deck, player, computer):
+    index = 0
+    while index < MAX_NUM_OF_CARDS_IN_DECK:
+        player.add_card(deck[index])
+        index += 1
+        computer.add_card(deck[index])
+        index += 1
+
+
+def create_player(name):
+    return Player(name)
 
 if __name__ == "__main__":
     main()
