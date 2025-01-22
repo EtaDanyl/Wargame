@@ -23,7 +23,7 @@ class Player:
             raise ValueError("Hand must be a list of cards.")
         self._hand = value
 
-    def add_card(self, card: Card):
+    def add_card(self, card):
         self._hand.append(card)
 
     def draw_card(self):
