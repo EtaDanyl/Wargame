@@ -1,69 +1,6 @@
 import random
-
-class Card:
-    def __init__(self, name, rank):
-        self._name = name
-        self._rank = rank
-
-    @property
-    def name(self):
-        return self._name
-
-    @name.setter
-    def name(self, value):
-        if not isinstance(value, str):
-            raise ValueError("Name must be a string.")
-        self._name = value
-
-    @property
-    def rank(self):
-        return self._rank
-
-    @rank.setter
-    def rank(self, value):
-        if not isinstance(value, int):
-            raise ValueError("Rank must be an integer.")
-        self._rank = value
-
-    def __str__(self):
-        return f"{self.name}"
-
-
-class Player:
-    def __init__(self, name):
-        self._name = name
-        self._hand = []
-
-    @property
-    def name(self):
-        return self._name
-
-    @name.setter
-    def name(self, value):
-        if not isinstance(value, str):
-            raise ValueError("Name must be a string.")
-        self._name = value
-
-    @property
-    def hand(self):
-        return self._hand
-
-    @hand.setter
-    def hand(self, value):
-        if not isinstance(value, list):
-            raise ValueError("Hand must be a list of cards.")
-        self._hand = value
-
-    def add_card(self, card: Card):
-        self._hand.append(card)
-
-    def draw_card(self):
-        return self._hand.pop(0) if self._hand else None
-
-    def __str__(self):
-        hand_representation = ', '.join(str(card) for card in self._hand) if self._hand else "No cards"
-        return f"Player: {self._name}, Hand: [{hand_representation}]"
-
+from card_class import Card
+from player_class import Player
 
 POSSIBLE_CARDS = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"]
 MAX_NUM_OF_CARDS_IN_DECK = 52
@@ -71,7 +8,7 @@ MAX_NUM_OF_CARDS_IN_DECK = 52
 MAX_NM_OF_CARDS_OF_EACH_RANK = 4
 NUMBER_OF_DIFFERENT_CARD_TYPES = len(POSSIBLE_CARDS)
 #Adding constraints since this game can run into an infite loop
-MAX_NUM_OF_ROUNDS = 10000
+MAX_NUM_OF_ROUNDS = 3000
 
 def main():
     deck = initialize_deck()
@@ -164,6 +101,9 @@ def create_player(name):
     return Player(name)
 
 def take_cards(taker, cards_to_take):
+    #Quite often the game would run into an infinite loop since we always collect cards in the same exact order programmically. 
+    #In real life cards would naturally mix up a little, therefore using shuffle method to avoid any infinite loops.
+    random.shuffle(cards_to_take)
     for card in cards_to_take:
         taker.add_card(card)
 
