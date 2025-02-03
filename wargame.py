@@ -69,7 +69,7 @@ def play_game(player, computer):
 
 
 def game_end(winner, loser):
-     print(f"{winner.name} wins the game! {loser.name} has no cards left.")
+    print(f"{winner.name} wins the game! {loser.name} has no cards left.")
 
 def print_played_card(player, card):
     print(f"{player.name} has played {card}")
