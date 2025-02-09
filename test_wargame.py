@@ -21,3 +21,15 @@ def test_two_decks():
 def test_create_player():
     player = create_player("John")
     assert isinstance(player, Player)
+
+def test_player_str_with_cards():
+    player = Player(name="Alice")  
+    player._hand = ["Ace of Spades", "10 of Hearts"]
+    expected_output = "Player: Alice, Hand: [Ace of Spades, 10 of Hearts]"
+    assert str(player) == expected_output
+
+def test_player_str_without_cards():
+    player = Player(name="Bob")  
+    player._hand = []
+    expected_output = "Player: Bob, Hand: [No cards]"
+    assert str(player) == expected_output
