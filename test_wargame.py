@@ -21,3 +21,7 @@ def test_two_decks():
 def test_create_player():
     player = create_player("John")
     assert isinstance(player, Player)
+
+def test_create_player_when_passing_int():
+    with pytest.raises(ValueError, match="Name must be a string"):
+        create_player(name=1)
